@@ -1,89 +1,129 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Welcome to Firebase Hosting</title>
 
-    <!-- update the version number as needed -->
-    <script defer src="/__/firebase/8.1.2/firebase-app.js"></script>
-    <!-- include only the Firebase features as you need -->
-    <script defer src="/__/firebase/8.1.2/firebase-auth.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-database.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-firestore.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-functions.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-messaging.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-storage.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-analytics.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-remote-config.js"></script>
-    <script defer src="/__/firebase/8.1.2/firebase-performance.js"></script>
-    <!-- 
-      initialize the SDK after all desired features are loaded, set useEmulator to false
-      to avoid connecting the SDK to running emulators.
-    -->
-    <script defer src="/__/firebase/init.js?useEmulator=true"></script>
+<head>
+  <title>Hello PWA world!111</title>
+  <link rel="manifest" href="manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('serviceWorker.js')
+        .then(
+          function (registration) {
+            if (typeof registration.update == 'function') {
+              registration.update();
+            }
+          })
+        .catch(function (error) {
+          console.log("Error Log: " + error);
+        });
+    }
+  </script>
+  <style>
+    table {
+      width: auto;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
 
-    <style media="screen">
-      body { background: #ECEFF1; color: rgba(0,0,0,0.87); font-family: Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 0; }
-      #message { background: white; max-width: 360px; margin: 100px auto 16px; padding: 32px 24px; border-radius: 3px; }
-      #message h2 { color: #ffa100; font-weight: bold; font-size: 16px; margin: 0 0 8px; }
-      #message h1 { font-size: 22px; font-weight: 300; color: rgba(0,0,0,0.6); margin: 0 0 16px;}
-      #message p { line-height: 140%; margin: 16px 0 24px; font-size: 14px; }
-      #message a { display: block; text-align: center; background: #039be5; text-transform: uppercase; text-decoration: none; color: white; padding: 16px; border-radius: 4px; }
-      #message, #message a { box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24); }
-      #load { color: rgba(0,0,0,0.4); text-align: center; font-size: 13px; }
-      @media (max-width: 600px) {
-        body, #message { margin-top: 0; background: white; box-shadow: none; }
-        body { border-top: 16px solid #ffa100; }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="message">
-      <h2>Welcome</h2>
-      <h1>Firebase Hosting Setup Complete</h1>
-      <p>You're seeing this because you've successfully setup Firebase Hosting. Now it's time to go build something extraordinary!</p>
-      <a target="_blank" href="https://firebase.google.com/docs/hosting/">Open Hosting Documentation</a>
-    </div>
-    <p id="load">Firebase SDK Loading&hellip;</p>
+    th,
+    td {
+      display: block;
+      width: auto;
+      text-align: center;
+      border: 1px solid #fff;
+    }
 
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const loadEl = document.querySelector('#load');
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
-        // // The Firebase SDK is initialized and available here!
-        //
-        // firebase.auth().onAuthStateChanged(user => { });
-        // firebase.database().ref('/path/to/ref').on('value', snapshot => { });
-        // firebase.firestore().doc('/foo/bar').get().then(() => { });
-        // firebase.functions().httpsCallable('yourFunction')().then(() => { });
-        // firebase.messaging().requestPermission().then(() => { });
-        // firebase.storage().ref('/path/to/ref').getDownloadURL().then(() => { });
-        // firebase.analytics(); // call to activate
-        // firebase.analytics().logEvent('tutorial_completed');
-        // firebase.performance(); // call to activate
-        //
-        // // 🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥
+    tbody {
+      display: flex;
+      width: auto;
+    }
 
-        try {
-          let app = firebase.app();
-          let features = [
-            'auth', 
-            'database', 
-            'firestore',
-            'functions',
-            'messaging', 
-            'storage', 
-            'analytics', 
-            'remoteConfig',
-            'performance',
-          ].filter(feature => typeof app[feature] === 'function');
-          loadEl.textContent = `Firebase SDK loaded with ${features.join(', ')}`;
-        } catch (e) {
-          console.error(e);
-          loadEl.textContent = 'Error loading the Firebase SDK, check the console.';
+    tbody tr {
+      display: flex;
+      flex-direction: column;
+    }
+
+.wrap {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -86px;
+  margin-left: -89px;
+  text-align: center;
+}
+
+a {
+  -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+  display: block;
+  max-width: 180px;
+  text-decoration: none;
+  border-radius: 4px;
+  padding: 20px 30px;
+}
+
+a.button {
+  color: rgba(30, 22, 54, 0.6);
+  box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+}
+
+a.button:hover {
+  color: rgba(255, 255, 255, 0.85);
+  box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+}
+
+  </style>
+</head>
+
+<body>
+  <div id="main">
+    <textarea id="text">再生する内容</textarea>
+    <button v-on:click="playSound" id="speak-btn">再生</button>
+    <table>
+      <tbody>
+        <tr v-for="gyou in all" :key="gyou.id">
+          <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button">{{char_}}</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    const text = document.querySelector('#text')
+    const speakBtn = document.querySelector('#speak-btn')
+
+    speakBtn.addEventListener('click', function () {
+    })
+    var vm = new Vue({
+      el: '#main',
+      data: {
+        all: [
+          'あいうえお',
+          'かきくけこ',
+          'さしすせそ',
+          'たちつてと',
+          'なにぬねの',
+          'はひふへほ',
+          'まみむめも',
+          'や-ゆ-よ',
+          'らりるれろ',
+          'わ---を',
+          'ん----',
+        ].reverse()
+      },
+      methods: {
+        playSound: function (event) {
+          const uttr = new SpeechSynthesisUtterance(text.value)
+          speechSynthesis.speak(uttr)
         }
-      });
-    </script>
-  </body>
+      }
+    });
+  </script>
+</body>
+
 </html>
