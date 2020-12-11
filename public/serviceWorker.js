@@ -1,6 +1,6 @@
-var CACHE_NAME  = "MKit-cache-v2";
+var CACHE_NAME  = "MKit-cache-v4";
 var urlsToCache = [
-    "https://aiueo-learn.web.app/",
+//    "https://aiueo-learn.web.app/",
 ];
 
 self.addEventListener('install', function(event) {

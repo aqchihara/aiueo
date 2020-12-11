@@ -1,6 +1,6 @@
 {
-    "name": "PWA sample for mobile kit",
-    "short_name": "MKit",
+    "name": "aiueo",
+    "short_name": "aiueo",
     "icons": [{
           "src": "https://aiueo-learn.web.app/logo192.png",
           "sizes": "192x192",

@@ -13,13 +13,6 @@
             if (typeof registration.update == 'function') {
               registration.update();
             }
-
-            registration.onupdatefound = function () {
-              console.log('アップデートがあります！');
-              registration.update();
-            }
-              registration.update();
-              console.log('アップデートがあります！');
           })
         .catch(function (error) {
           console.log("Error Log: " + error);
@@ -53,6 +46,15 @@
       flex-direction: column;
     }
 
+    .wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -86px;
+      margin-left: -89px;
+      text-align: center;
+    }
+
     a {
       -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
       -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
@@ -75,11 +77,10 @@
       color: rgba(255, 255, 255, 0.85);
       box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
     }
-
-    h1 {
-      height: 1.2em;
-      border-bottom: 1px solid #000;
-      background-color: #eee;
+    h1{
+    height: 1.2em;
+    border-bottom: 1px solid #000;
+    background-color: #eee;
     }
   </style>
 </head>
@@ -129,8 +130,8 @@
         clickChar: function (event) {
           this.text += event.target.text
         },
-        deleteChar: function (event) {
-          this.text = this.text.slice(0, -1)
+        deleteChar:  function (event) {
+          this.text = this.text.slice( 0, -1 ) 
         },
       }
     });
