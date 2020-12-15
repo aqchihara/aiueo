@@ -1,6 +1,6 @@
 {
-    "name": "aiueo",
-    "short_name": "aiueo",
+    "name": "aiueo-v1",
+    "short_name": "aiueo-v1",
     "icons": [{
           "src": "https://aiueo-learn.web.app/logo192.png",
           "sizes": "192x192",
@@ -8,6 +8,6 @@
         }],
     "start_url": "https://aiueo-learn.web.app/v1/",
     "display": "standalone",
-    "background_color": "#3E4EB8",
+    "background_color": "#cccccc",
     "theme_color": "#2F3BA2"
   }

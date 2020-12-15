@@ -68,7 +68,7 @@
       max-width: 180px;
       text-decoration: none;
       border-radius: 4px;
-      padding: 10px 20px;
+      padding: 20px 20px;
     }
 
     a.button {
@@ -97,10 +97,11 @@
           <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button" v-on:click="clickChar">{{char_}}</a></td>
         </tr>
         <tr>
-          <td><a href="#" class="button" v-on:click="deleteChar">1文字削除</a></td>
-          <td><a href="#" class="button" v-on:click="">-</a></td>
-          <td><a href="#" class="button" v-on:click="">-</a></td>
-          <td><a href="#" class="button" v-on:click="">-</a></td>
+          <td><a href="#" class="button" v-on:click="deleteAll">clean</a></td>
+          <td><a href="#" class="button" v-on:click="deleteChar">delete</a></td>
+          <td><a href="#" class="button" v-on:click="beDakuon">゛</a></td>
+          <td><a href="#" class="button" v-on:click="beHandakuon">゜</a></td>
+          <td><a href="#" class="button" v-on:click="beYouonSokuon">↓</a></td>
           <td><a href="#" class="button" v-on:click="playSound">再生</a></td>
         </tr>
       </tbody>
@@ -118,24 +119,95 @@
           'なにぬねの',
           'はひふへほ',
           'まみむめも',
-          'や-ゆ-よ',
+          'や　ゆ　よ',
           'らりるれろ',
-          'わ---を',
-          'ん----',
+          'わ　　　を',
+          'ん、。_　',
         ].reverse(),
-        text: ""
+        dakuon_dic:{
+          "か" : "が",
+          "き" : "ぎ",
+          "く" : "ぐ",
+          "け" : "げ",
+          "こ" : "ご",
+          "さ" : "ざ",
+          "し" : "じ",
+          "す" : "ず",
+          "せ" : "ぜ",
+          "そ" : "ぞ",
+          "た" : "だ",
+          "ち" : "ぢ",
+          "つ" : "づ",
+          "て" : "で",
+          "と" : "ど",
+          "は" : "ば",
+          "ひ" : "び",
+          "ふ" : "ぶ",
+          "へ" : "べ",
+          "ほ" : "ぼ",
+          "ぱ" : "ば",
+          "ぴ" : "び",
+          "ぷ" : "ぶ",
+          "ぺ" : "べ",
+          "ぽ" : "ぼ",
+        },
+        handakuon_dic:{
+          "は" : "ぱ",
+          "ひ" : "ぴ",
+          "ふ" : "ぷ",
+          "へ" : "ぺ",
+          "ほ" : "ぽ",
+          "ば" : "ぱ",
+          "び" : "ぴ",
+          "ぶ" : "ぷ",
+          "べ" : "ぺ",
+          "ぼ" : "ぽ",
+        },
+        youon_sokuon_dic:{
+          "つ":"っ",
+          "や":"ゃ",
+          "ゆ":"ゅ",
+          "よ":"ょ",
+        },
+        text: "",
       },
       methods: {
         playSound: function (event) {
-          const uttr = new SpeechSynthesisUtterance(this.text)
-          speechSynthesis.speak(uttr)
+          this.speak(this.text)
         },
         clickChar: function (event) {
           this.text += event.target.text
+          this.speak(event.target.text)
+        },
+        deleteAll:  function (event) {
+          this.text = ""
         },
         deleteChar:  function (event) {
           this.text = this.text.slice( 0, -1 ) 
         },
+        beDakuon:  function (event) {
+          if( this.text.slice(-1) in this.dakuon_dic){
+            this.text = this.text.slice( 0, -1 ) +  this.dakuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        beHandakuon:  function (event) {
+          if( this.text.slice(-1) in this.handakuon_dic){
+            this.text = this.text.slice( 0, -1 ) +  this.handakuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        beYouonSokuon:  function(event){
+          if( this.text.slice(-1) in this.youon_sokuon_dic){
+            this.text = this.text.slice( 0, -1 ) +  this.youon_sokuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        speak:function(text){
+          const uttr = new SpeechSynthesisUtterance(text)
+          speechSynthesis.speak(uttr)
+
+        }
       }
     });
   </script>
