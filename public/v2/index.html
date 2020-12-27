@@ -2,8 +2,8 @@
 <html>
 
 <head>
-  <title>あいうえお表</title>
-  <link rel="manifest" href="manifest.json">
+  <title>あいうえお表v2</title>
+  <link rel="manifest" href="./manifest.json">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script>
     if ('serviceWorker' in navigator) {
@@ -22,6 +22,12 @@
   <style>
     html {
       touch-action: manipulation;
+      overflow: hidden;
+    }
+
+    body {
+      overflow: hidden;
+      margin: 0px;
     }
 
     table {
@@ -69,12 +75,15 @@
       max-width: 180px;
       text-decoration: none;
       border-radius: 4px;
-      padding: 20px 20px;
+      padding: 50px 20px 0px 20px;
     }
 
     a.button {
       color: rgba(30, 22, 54, 0.6);
       box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+      height: 1.4em;
+      background-size: contain;
+      background-repeat: no-repeat;
     }
 
     a.button:hover {
@@ -82,57 +91,54 @@
       box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
     }
 
+    #main {
+      float: left;
+      transform-origin: left top;
+    }
+
     h1 {
+      margin-block-start: 0;
+      margin-block-end: 0;
       height: 1.2em;
       border-bottom: 1px solid #000;
       background-color: #eee;
+      width: 737px;
     }
   </style>
 </head>
 
 <body>
-  <div id="main" style="float:left;">
-    <p><select id="voice"></select></p>
+  <div id="main"
+    v-bind:style="`transform:scale(calc(${width} / ${targetWidth}), calc(${height} / ${targetHeight}));margin-bottom:${marginBottom}px`">
     <h1>{{text}}</h1>
     <table>
       <tbody>
         <tr v-for="gyou in all" :key="gyou.id">
-          <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button" v-on:click="clickChar">{{char_}}</a></td>
+          <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button" v-on:click="clickChar"
+              v-bind:style="`background-image: url(/images/${char_}.JPG);`">{{char_}}<br /></a></td>
         </tr>
         <tr>
-          <td><a href="#" class="button" v-on:click="deleteAll">全消</a></td>
-          <td><a href="#" class="button" v-on:click="deleteChar">一消</a></td>
-          <td><a href="#" class="button" v-on:click="beDakuon">゛</a></td>
-          <td><a href="#" class="button" v-on:click="beHandakuon">゜</a></td>
-          <td><a href="#" class="button" v-on:click="beYouonSokuon">↓</a></td>
-          <td><a href="#" class="button" v-on:click="playSound">再生</a></td>
+          <td><a href="#" class="button" v-on:click="deleteAll" 　style="background-image: url(/images/全消.JPG);">全消</a>
+          </td>
+          <td><a href="#" class="button" v-on:click="deleteChar" 　style="background-image: url(/images/一消.JPG);">一消</a>
+          </td>
+          <td><a href="#" class="button"><br /></a></td>
+          <td><a href="#" class="button"><br /></a></td>
+          <td><a href="#" class="button" v-on:click="playSound" 　style="background-image: url(/images/再生.JPG);">再生</a>
+          </td>
         </tr>
       </tbody>
     </table>
   </div>
   <script>
-      let voices = [];
-    if (window.speechSynthesis) {
-      function setVoices() {
-        if (voices.length) return;
-        voices = speechSynthesis.getVoices();
-        if (!voices.length) return;
-        voices
-          .filter(v => v.lang.startsWith("ja"))
-          .forEach(v => {
-            let opt = document.createElement("option");
-            opt.text = v.name;
-            opt.voice = v;
-            voice.appendChild(opt);
-          });
-      }
-      speechSynthesis.addEventListener("voiceschanged", setVoices);
-      setVoices();
-    }
-
     var vm = new Vue({
       el: '#main',
       data: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        targetWidth: 737,
+        targetHeight: 422,
+        marginBottom: 0,
         all: [
           'あいうえお',
           'かきくけこ',
@@ -144,7 +150,7 @@
           'や　ゆ　よ',
           'らりるれろ',
           'わ　　　を',
-          'ん、。_　',
+          'ん　゛゜↓',
         ].reverse(),
         dakuon_dic: {
           "か": "が",
@@ -198,8 +204,15 @@
           this.speak(this.text)
         },
         clickChar: function (event) {
+          if (event.target.text == "゛") { this.beDakuon(); return; }
+          if (event.target.text == "゜") { this.beHandakuon(); return; }
+          if (event.target.text == "↓") { this.beYouonSokuon(); return; }
+
           this.text += event.target.text
-          this.speak(event.target.text)
+          var text = event.target.text
+          if (text == "は") { text = "歯" }
+          if (text == "へ") { text = "屁" }
+          this.speak(text)
         },
         deleteAll: function (event) {
           this.text = ""
@@ -226,32 +239,19 @@
           this.speak(this.text.slice(-1))
         },
         speak: function (text) {
-          let voices = [];
-          if (voices.length) return;
-          voices = speechSynthesis.getVoices().filter(v => v.lang.startsWith("ja"));
-          if (!voices.length) return;
-
-          console.log(voices)
-
           const uttr = new SpeechSynthesisUtterance(text)
-          uttr.voice = voices[1]
           speechSynthesis.speak(uttr)
 
         }
+      },
+      created: function () {
+        this.marginBottom = this.height - document.getElementById('main').clientHeight
+        console.log(this.margin)
       }
     });
-    console.log(speechSynthesis.getVoices())
-
-
-    // button1.addEventListener("click", () => {
-    //   let opt = voice.selectedOptions;
-    //   if (!opt.length) return;
-    //   let u = new SpeechSynthesisUtterance(textarea.value);
-    //   u.voice = opt[0].voice;
-    //   u.lang = u.voice.lang;
-    //   speechSynthesis.speak(u);
-    // });
   </script>
+
+
 </body>
 
 </html>
