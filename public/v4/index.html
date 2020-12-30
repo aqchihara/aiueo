@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <title>あいうえお表v3</title>
+  <title>あいうえお表v4.3</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <link rel="manifest" href="./manifest.json">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script>
@@ -28,6 +29,7 @@
     body {
       overflow: hidden;
       margin: 0px;
+      -webkit-user-select:none;
     }
 
     table {
@@ -107,24 +109,24 @@
   </style>
 </head>
 
-<body>
+<body oncontextmenu='return false;'>
   <div id="main"
     v-bind:style="`transform:scale(calc(${width} / ${targetWidth}), calc(${height} / ${targetHeight}));margin-bottom:${marginBottom}px`">
     <h1>{{text}}</h1>
     <table>
       <tbody>
         <tr v-for="gyou in all" :key="gyou.id">
-          <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button" v-on:click="clickChar"
+          <td v-for="char_ in gyou" :key="char_.id"><a href="#" class="button" v-on:touchstart="clickChar"
               v-bind:style="`background-image: url(/images/${char_}.JPG);`">{{char_}}<br /></a></td>
         </tr>
         <tr>
           <td><a href="#" class="button"><br /></a></td>
           <td><a href="#" class="button"><br /></a></td>
-          <td><a href="#" class="button" v-on:click="deleteAll" 　style="background-image: url(/images/全消.JPG);">全消</a>
+          <td><a href="#" class="button" v-on:touchstart="deleteAll" 　style="background-image: url(/images/全消.JPG);">全消</a>
           </td>
-          <td><a href="#" class="button" v-on:click="deleteChar" 　style="background-image: url(/images/一消.JPG);">一消</a>
+          <td><a href="#" class="button" v-on:touchstart="deleteChar" 　style="background-image: url(/images/一消.JPG);">一消</a>
           </td>
-          <td><a href="#" class="button" v-on:click="playSound" 　style="background-image: url(/images/再生.JPG);">再生</a>
+          <td><a href="#" class="button" v-on:touchstart="playSound" 　style="background-image: url(/images/再生.JPG);">再生</a>
           </td>
         </tr>
       </tbody>
@@ -150,7 +152,7 @@
           'や　ゆ　よ',
           'らりるれろ',
           'わ　　　を',
-          'ん　゛゜',
+          'んー゛゜小',
         ].reverse(),
         dakuon_dic: {
           "か": "が",
@@ -196,6 +198,11 @@
           "や": "ゃ",
           "ゆ": "ゅ",
           "よ": "ょ",
+          "あ": "ぁ",
+          "い": "ぃ",
+          "う": "ぅ",
+          "え": "ぇ",
+          "お": "ぉ",
         },
         text: "",
       },
@@ -204,15 +211,18 @@
           this.speak(this.text)
         },
         clickChar: function (event) {
+          if (event.target.text == "　") { return; }
           if (event.target.text == "゛") { this.beDakuon(); return; }
           if (event.target.text == "゜") { this.beHandakuon(); return; }
-          if (event.target.text == "↓") { this.beYouonSokuon(); return; }
+          if (event.target.text == "小") { this.beYouonSokuon(); return; }
 
           this.text += event.target.text
           var text = event.target.text
           if (text == "は") { text = "歯" }
           if (text == "へ") { text = "屁" }
-          this.speak(text)
+          setTimeout(() => {
+            this.speak(text)
+          }, 10); 
         },
         deleteAll: function (event) {
           this.text = ""
@@ -245,9 +255,7 @@
         }
       },
       created: function () {
-        this.marginBottom = this.height - document.getElementById('main').clientHeight
-        console.log(this.margin)
-        
+        this.marginBottom = this.height - document.getElementById('main').clientHeight        
       }
     });
   </script>
