@@ -1,7 +1,7 @@
 {
-  "name": "あいうえおv4",
-  "short_name": "あいうえおv4",
-  "orientation":"landscape",
+  "name": "あいうえおv5",
+  "short_name": "あいうえおv5",
+  "orientation":"landscape-primary",
   "icons": [{
         "src": "https://aiueo-learn.web.app/v4/logo192.jpg",
         "sizes": "192x192",
