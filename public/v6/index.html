@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>あいうえお表v6.0</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <link rel="manifest" href="./manifest.json">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script type="text/javascript">
+    window.addEventListener('load', function() {
+      window.history.pushState({}, '')
+    })
+
+    window.addEventListener('popstate', function() {
+      window.history.pushState({}, '')
+    })
+    </script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('serviceWorker.js')
+        .then(
+          function (registration) {
+            if (typeof registration.update == 'function') {
+              registration.update();
+            }
+          })
+        .catch(function (error) {
+          console.log("Error Log: " + error);
+        });
+    }
+  </script>
+  <style>
+    html {
+      touch-action: manipulation;
+      overflow: hidden;
+    }
+
+    body {
+      overflow: hidden;
+      margin: 0px;
+      -webkit-user-select:none;
+    }
+
+    table {
+      width: auto;
+      border-right: 1px solid #fff;
+      border-bottom: 1px solid #fff;
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    th,
+    td {
+      display: block;
+      width: auto;
+      text-align: center;
+      border: 1px solid #fff;
+    }
+
+    tbody {
+      display: flex;
+      width: auto;
+    }
+
+    tbody tr {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .wrap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-top: -86px;
+      margin-left: -89px;
+      text-align: center;
+    }
+
+    a {
+      -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+      -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+      -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+      -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+      transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
+      display: block;
+      max-width: 180px;
+      text-decoration: none;
+      border-radius: 4px;
+      padding: 50px 20px 0px 20px;
+    }
+
+    a.button {
+      color: rgba(30, 22, 54, 0.6);
+      box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
+      height: 1.4em;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+
+    a.button:hover {
+      color: rgba(255, 255, 255, 0.85);
+      box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
+    }
+
+    a.button.text {
+      background-image: inherit !important;
+      padding: 0 2px;
+    font-size: 52px;
+    }
+
+    #main {
+      float: left;
+      transform-origin: left top;
+    }
+
+    h1 {
+      margin-block-start: 0;
+      margin-block-end: 0;
+      height: 1.2em;
+      border-bottom: 1px solid #000;
+      background-color: #eee;
+      width: 737px;
+    }
+  </style>
+</head>
+
+<body oncontextmenu='return false;'>
+  <div id="main"
+    v-bind:style="`transform:scale(calc(${width} / ${targetWidth}), calc(${height} / ${targetHeight}));margin-bottom:${marginBottom}px`">
+    <h1>{{text}}</h1>
+    <table>
+      <tbody>
+        <tr v-for="gyou in all" :key="gyou.id">
+          <td v-for="char_ in gyou" :key="char_.id"><a href="#" v-bind:class="`button ${visualMode}`" v-on:touchstart="clickChar"
+              v-bind:style="`background-image: url(/images/${char_}.JPG);`">{{char_}}<br /></a></td>
+        </tr>
+        <tr>
+          <td><a href="#" class="button" v-on:touchstart="toggleVisualMode" style="background-image: url(/images/切替.JPG);">切替</a></td>
+          <td><a href="#" class="button"><br /></a></td>
+          <td><a href="#" class="button" v-on:touchstart="deleteAll" style="background-image: url(/images/全消.JPG);">全消</a>
+          </td>
+          <td><a href="#" class="button" v-on:touchstart="deleteChar" style="background-image: url(/images/一消.JPG);">一消</a>
+          </td>
+          <td><a href="#" class="button" v-on:touchstart="playSound" style="background-image: url(/images/再生.JPG);">再生</a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <script>
+    var vm = new Vue({
+      el: '#main',
+      data: {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        targetWidth: 737,
+        targetHeight: 422,
+        marginBottom: 0,
+        visualMode:"icon",
+        all: [
+          'あいうえお',
+          'かきくけこ',
+          'さしすせそ',
+          'たちつてと',
+          'なにぬねの',
+          'はひふへほ',
+          'まみむめも',
+          'や　ゆ　よ',
+          'らりるれろ',
+          'わ　　　を',
+          'んー゛゜小',
+        ].reverse(),
+        dakuon_dic: {
+          "か": "が",
+          "き": "ぎ",
+          "く": "ぐ",
+          "け": "げ",
+          "こ": "ご",
+          "さ": "ざ",
+          "し": "じ",
+          "す": "ず",
+          "せ": "ぜ",
+          "そ": "ぞ",
+          "た": "だ",
+          "ち": "ぢ",
+          "つ": "づ",
+          "て": "で",
+          "と": "ど",
+          "は": "ば",
+          "ひ": "び",
+          "ふ": "ぶ",
+          "へ": "べ",
+          "ほ": "ぼ",
+          "ぱ": "ば",
+          "ぴ": "び",
+          "ぷ": "ぶ",
+          "ぺ": "べ",
+          "ぽ": "ぼ",
+        },
+        handakuon_dic: {
+          "は": "ぱ",
+          "ひ": "ぴ",
+          "ふ": "ぷ",
+          "へ": "ぺ",
+          "ほ": "ぽ",
+          "ば": "ぱ",
+          "び": "ぴ",
+          "ぶ": "ぷ",
+          "べ": "ぺ",
+          "ぼ": "ぽ",
+        },
+        youon_sokuon_dic: {
+          "つ": "っ",
+          "や": "ゃ",
+          "ゆ": "ゅ",
+          "よ": "ょ",
+          "あ": "ぁ",
+          "い": "ぃ",
+          "う": "ぅ",
+          "え": "ぇ",
+          "お": "ぉ",
+        },
+        text: "",
+      },
+      methods: {
+        playSound: function (event) {
+          this.speak(this.text)
+        },
+        clickChar: function (event) {
+          if (event.target.text == "　") { return; }
+          if (event.target.text == "゛") { this.beDakuon(); return; }
+          if (event.target.text == "゜") { this.beHandakuon(); return; }
+          if (event.target.text == "小") { this.beYouonSokuon(); return; }
+
+          this.text += event.target.text
+          var text = event.target.text
+          if (text == "は") { text = "歯" }
+          if (text == "へ") { text = "屁" }
+          setTimeout(() => {
+            this.speak(text)
+          }, 10); 
+        },
+        toggleVisualMode:function(){
+          this.visualMode = {"icon":"text", "text":"icon"}[this.visualMode]
+        },
+        deleteAll: function (event) {
+          this.text = ""
+        },
+        deleteChar: function (event) {
+          this.text = this.text.slice(0, -1)
+        },
+        beDakuon: function (event) {
+          if (this.text.slice(-1) in this.dakuon_dic) {
+            this.text = this.text.slice(0, -1) + this.dakuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        beHandakuon: function (event) {
+          if (this.text.slice(-1) in this.handakuon_dic) {
+            this.text = this.text.slice(0, -1) + this.handakuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        beYouonSokuon: function (event) {
+          if (this.text.slice(-1) in this.youon_sokuon_dic) {
+            this.text = this.text.slice(0, -1) + this.youon_sokuon_dic[this.text.slice(-1)]
+          }
+          this.speak(this.text.slice(-1))
+        },
+        speak: function (text) {
+          const uttr = new SpeechSynthesisUtterance(text)
+          speechSynthesis.speak(uttr)
+
+        }
+      },
+      created: function () {
+        this.marginBottom = this.height - document.getElementById('main').clientHeight        
+      }
+    });
+  </script>
+
+
+</body>
+
+</html>

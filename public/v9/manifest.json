@@ -1,13 +1,13 @@
 {
-  "name": "あいうえおv5",
-  "short_name": "あいうえおv5",
+  "name": "あいうえおv9",
+  "short_name": "あいうえおv9",
   "orientation":"landscape-primary",
   "icons": [{
-        "src": "https://aiueo-learn.web.app/v5/logo192.jpg",
+        "src": "https://aiueo-learn.web.app/v9/logo192.jpg",
         "sizes": "192x192",
         "type": "image/png"
       }],
-  "start_url": "https://aiueo-learn.web.app/v5/",
+  "start_url": "https://aiueo-learn.web.app/v9/",
   "display": "fullscreen",
   "background_color": "#cccccc",
   "theme_color": "#2F3BA2"
