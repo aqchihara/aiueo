@@ -2,11 +2,11 @@
 <html>
 
 <head>
-  <title>あいうえお表v9.1</title>
+  <title>あいうえお表v13</title>
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v9/logo192.jpg" sizes="192x192" />
+  <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v13/logo192.jpg" sizes="192x192" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -123,7 +123,8 @@
     h1 {
       margin-block-start: 0;
       margin-block-end: 0;
-      height: 1.2em;
+      height: 2.1em;
+      line-height: 1em;
       border-bottom: 1px solid #000;
       background-color: #eee;
     }
@@ -152,8 +153,9 @@
         <tr>
           <td><a href="#" class="button" v-on:touchstart="toggleVisualMode"
               style="background-image: url(/images/切替.JPG);">切替</a></td>
-          <td><a href="#" class="button"><br /></a></td>
-          <td><a href="#" class="button"><br /></a></td>
+          <td><a href="./edit_list.html" class="button">戻る<br /></a></td>
+          <td><a href="#" class="button" v-on:touchstart="registerWord"
+              style="background-image: url(/images/登録.JPG);">登録<br /></a></td>
           <td><a href="#" class="button" v-on:touchstart="deleteChar"
               style="background-image: url(/images/一消.JPG);">一消</a>
           </td>
@@ -171,10 +173,12 @@
         width: window.innerWidth,
         height: window.innerHeight,
         targetWidth: 753,
-        targetHeight: 422,
+        targetHeight: 451,
         marginBottom: 0,
         visualMode: "icon",
         cssTransform: "",
+        num:0,
+        wordList:[],
         all: [
           'あいうえお',
           'かきくけこ',
@@ -264,14 +268,16 @@
           if (event.target.text == "゛") { this.beDakuon(); return; }
           if (event.target.text == "゜") { this.beHandakuon(); return; }
           if (event.target.text == "小") { this.beYouonSokuon(); return; }
+          if (this.text.length < 15) {
+            this.text += event.target.text
+            var text = event.target.text
+            if (text == "は") { text = "派" }
+            if (text == "へ") { text = "屁" }
+            setTimeout(() => {
+              this.speak(text)
+            }, 10);
+          }
 
-          this.text += event.target.text
-          var text = event.target.text
-          if (text == "は") { text = "歯" }
-          if (text == "へ") { text = "屁" }
-          setTimeout(() => {
-            this.speak(text)
-          }, 10);
         },
         toggleVisualMode: function () {
           this.visualMode = { "icon": "text", "text": "icon" }[this.visualMode]
@@ -283,6 +289,12 @@
         },
         deleteChar: function (event) {
           this.text = this.text.slice(0, -1)
+        },
+        registerWord: function (event) {
+          this.wordList[this.num] = this.text
+          localStorage.setItem('wordList', JSON.stringify(this.wordList));
+          
+          window.location.href = './edit_list.html';
         },
         beDakuon: function (event) {
           if (this.text.slice(-1) in this.dakuon_dic) {
@@ -315,6 +327,16 @@
         } else {
           this.cssTransform = `rotate(90deg) translateY(-${this.width}px) scale(calc(${this.height} / ${this.targetWidth}), calc(${this.width} / ${this.targetHeight})) `
         }
+
+
+        var params = (new URL(document.location)).searchParams;
+        this.num = params.get('num');
+
+
+
+        this.wordList = JSON.parse(localStorage.getItem('wordList'))
+
+        this.text = this.wordList[this.num]
       }
     });
   </script>

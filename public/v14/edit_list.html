@@ -2,167 +2,46 @@
 <html>
 
 <head>
-  <title>あいうえお表v9.1</title>
+  <title>あいうえお表v13</title>
   <meta name="viewport"
     content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
   <link rel="manifest" href="./manifest.json">
-  <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v9/logo192.jpg" sizes="192x192" />
+  <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v13/logo192.jpg" sizes="192x192" />
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/css/main.css" />
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-  <script type="text/javascript">
-    window.addEventListener('load', function () {
-      window.history.pushState({}, '')
-    })
+  <script src="/js/pwa.js"></script>
 
-    window.addEventListener('popstate', function () {
-      window.history.pushState({}, '')
-    })
-  </script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('serviceWorker.js')
-        .then(
-          function (registration) {
-            if (typeof registration.update == 'function') {
-              registration.update();
-            }
-          })
-        .catch(function (error) {
-          console.log("Error Log: " + error);
-        });
-    }
-  </script>
-  <style>
-    html {
-      touch-action: manipulation;
-      overflow: hidden;
-    }
-
-    body {
-      overflow: hidden;
-      margin: 0px;
-      -webkit-touch-callout: none;
-      -webkit-user-select: none;
-      font-family: 'Noto Sans JP', "游ゴシック Medium", YuGothic, YuGothicM, "Hiragino Kaku Gothic ProN", "Hiragino Kaku Gothic Pro", メイリオ, Meiryo, sans-serif;
-      font-weight: bold;
-    }
-
-    table {
-      width: auto;
-      border-right: 1px solid #fff;
-      border-bottom: 1px solid #fff;
-      border-collapse: collapse;
-      border-spacing: 0;
-    }
-
-    th,
-    td {
-      display: block;
-      width: auto;
-      text-align: center;
-      border: 1px solid #fff;
-    }
-
-    tbody {
-      display: flex;
-      width: auto;
-    }
-
-    tbody tr {
-      display: flex;
-      flex-direction: column;
-    }
-
-    .wrap {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-top: -86px;
-      margin-left: -89px;
-      text-align: center;
-    }
-
-    a {
-      -webkit-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-      -moz-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-      -ms-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-      -o-transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-      transition: all 200ms cubic-bezier(0.390, 0.500, 0.150, 1.360);
-      display: block;
-      max-width: 180px;
-      text-decoration: none;
-      border-radius: 4px;
-      padding: 50px 20px 0px 20px;
-    }
-
-    a.button {
-      color: black;
-      box-shadow: rgba(30, 22, 54, 0.4) 0 0px 0px 2px inset;
-      height: 1.4em;
-      background-size: contain;
-      background-repeat: no-repeat;
-    }
-
-    a.button:hover {
-      color: rgba(255, 255, 255, 0.85);
-      box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
-    }
-
-    a.button.text {
-      background-image: inherit !important;
-      padding: 0 2px;
-      font-size: 52px;
-    }
-
-    #main {
-      float: left;
-      transform-origin: left top;
-    }
-
-    h1 {
-      margin-block-start: 0;
-      margin-block-end: 0;
-      height: 1.2em;
-      border-bottom: 1px solid #000;
-      background-color: #eee;
-    }
-  </style>
 </head>
 
 <body oncontextmenu='return false;'>
   <div id="main" v-bind:style="`transform:${cssTransform};margin-bottom:${marginBottom}px;`">
-    <h1 v-bind:style="`width: ${targetWidth}px;`">{{text}}</h1>
+    <h1 v-bind:style="`width: ${targetWidth}px;`">編集したい単語を選んでください</h1>
     <table>
       <tbody>
-        <tr>
-          <td><a href="#" class="button" v-on:touchstart="deleteAll"
-              style="background-image: url(/images/全消.JPG);">全消</a>
-          </td>
-          <td><a href="#" class="button" v-on:touchstart="touchStartChar" v-on:touchend="touchEndChar">ー</a></td>
-          <td><a href="#" class="button" v-on:touchstart="touchStartChar" v-on:touchend="touchEndChar">゛</a></td>
-          <td><a href="#" class="button" v-on:touchstart="touchStartChar" v-on:touchend="touchEndChar">゜</a></td>
-          <td><a href="#" class="button" v-on:touchstart="touchStartChar" v-on:touchend="touchEndChar">小</a></td>
-        </tr>
-        <tr v-for="gyou in all" :key="gyou.id">
-          <td v-for="char_ in gyou" :key="char_.id"><a href="#" v-bind:class="`button ${visualMode} kana`"
-              v-on:touchstart="touchStartChar" v-on:touchend="touchEndChar"
-              v-bind:style="`background-image: url(/images/${char_}.JPG);`">{{char_}}<br /></a></td>
-        </tr>
-        <tr>
-          <td><a href="#" class="button" v-on:touchstart="toggleVisualMode"
-              style="background-image: url(/images/切替.JPG);">切替</a></td>
-          <td><a href="#" class="button"><br /></a></td>
-          <td><a href="#" class="button"><br /></a></td>
-          <td><a href="#" class="button" v-on:touchstart="deleteChar"
-              style="background-image: url(/images/一消.JPG);">一消</a>
-          </td>
-          <td><a href="#" class="button" v-on:touchstart="playSound"
-              style="background-image: url(/images/再生.JPG);">再生</a>
+        <tr v-for="retsu in [0,1] " :key="retsu.id">
+          <td v-for="gyou in [0,1,2,3,4]" :key="gyou.id"><a href="#" v-bind:class="`button ${visualMode} kana`"
+              v-on:touchstart="touchStartEdit(retsu * 5 + gyou)"
+              v-on:touchend="touchEndEdit(retsu * 5 + gyou)">{{wordList[retsu * 5 + gyou]}}<br /></a>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <section>
+      <a href="./edit_list.html" onclick="return confirm('単語を編集しますか？')" style="float: left;
+    border: 1px solid black;
+    margin: 5px;visibility: hidden;">単語編集<span v-on:touchstart="touchStartEdit(retsu * 5 + gyou)"
+          v-on:touchend="touchEndEdit(retsu * 5 + gyou)" class="icon-pencil"></a>
+      <a href="./word_list.html" style="float: left;
+                border: 1px solid black;
+                margin: 5px;">単語一覧</a>
+      <a href="./" style="float: right;
+    border: 1px solid black;
+    margin: 5px;">50音表</a>
+    </section>
   </div>
   <script>
     var vm = new Vue({
@@ -170,11 +49,12 @@
       data: {
         width: window.innerWidth,
         height: window.innerHeight,
-        targetWidth: 753,
-        targetHeight: 422,
+        targetWidth: 809,
+        targetHeight: 466,
         marginBottom: 0,
         visualMode: "icon",
         cssTransform: "",
+        wordList: [],
         all: [
           'あいうえお',
           'かきくけこ',
@@ -243,10 +123,19 @@
         playSound: function (event) {
           this.speak(this.text)
         },
+        touchStartEdit: function (num) {//android・chrome用
+          window.location.href = './edit.html?num=' + num;
+        },
+        touchEndEdit: function (num) {//ios・safari用
+          // window.location.href = '/edit.html';
+
+        },
         touchStartChar: function (event) {//android・chrome用
           var userAgent = window.navigator.userAgent.toLowerCase();
           if (userAgent.indexOf('chrome') != -1) {
-            this.clickChar(event)
+            if (event.target.text != undefined) {
+              this.clickChar(event)
+            }
 
           } else if (userAgent.indexOf('safari') != -1) {
           }
@@ -255,11 +144,14 @@
           var userAgent = window.navigator.userAgent.toLowerCase();
           if (userAgent.indexOf('chrome') != -1) {
           } else if (userAgent.indexOf('safari') != -1) {
-            this.clickChar(event)
+            if (event.target.text != undefined) {
+              this.clickChar(event)
+            }
           }
 
         },
         clickChar: function (event) {
+          this.text = "";
           if (event.target.text == "　") { return; }
           if (event.target.text == "゛") { this.beDakuon(); return; }
           if (event.target.text == "゜") { this.beHandakuon(); return; }
@@ -309,12 +201,19 @@
         }
       },
       created: function () {
+        // サイズ調整
         this.marginBottom = this.height - document.getElementById('main').clientHeight
         if (this.width > this.height) {
           this.cssTransform = `scale(calc(${this.width} / ${this.targetWidth}), calc(${this.height} / ${this.targetHeight}))`
         } else {
           this.cssTransform = `rotate(90deg) translateY(-${this.width}px) scale(calc(${this.height} / ${this.targetWidth}), calc(${this.width} / ${this.targetHeight})) `
         }
+
+        // ローカルストレージの初期化
+        if (localStorage.getItem('wordList') == null) {
+          localStorage.setItem('wordList', JSON.stringify(["", "", "", "", "", "", "", "", "", ""]));
+        }
+        this.wordList = JSON.parse(localStorage.getItem('wordList'))
       }
     });
   </script>
