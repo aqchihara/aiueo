@@ -28,6 +28,21 @@ td {
     border: 1px solid #fff;
 }
 
+td.word {
+    width: 25em;
+    height: 4em;
+    background-color: azure;
+}
+
+td.word.edit {
+    background-color: lightcyan;
+}
+
+tr:nth-child(2n) td.word:nth-child(2n),
+tr:nth-child(2n+1) td.word:nth-child(2n+1) {
+    background-color: lightyellow;
+}
+
 tbody {
     display: flex;
     width: auto;
@@ -77,6 +92,17 @@ a.button.text {
     background-image: inherit !important;
     padding: 0 2px;
     font-size: 52px;
+}
+
+.word a.button {
+    padding: 10px 20px 10px 20px;
+    height: 1.8em;
+    font-size: 24px;
+    max-width: inherit;
+}
+
+section.page_tab a {
+    padding: 10px 20px 10px 20px;
 }
 
 #main {
