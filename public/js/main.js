@@ -3,11 +3,12 @@ var vm = new Vue({
     data: {
         width: window.innerWidth,
         height: window.innerHeight,
-        targetWidth: 753,
-        targetHeight: 451,
+        targetWidth: pageWidth,
+        targetHeight: pageHight,
         marginBottom: 0,
         visualMode: "icon",
         cssTransform: "",
+        wordList: [],
         all: [
             'あいうえお',
             'かきくけこ',
@@ -74,21 +75,48 @@ var vm = new Vue({
     },
     methods: {
         playSound: function(event) {
-            this.speak(this.text)
+            this.speak(this.text);
+        },
+        touchStartEdit: function(num) { //android・chrome用
+            window.location.href = './edit.html?num=' + num;
+        },
+        touchEndEdit: function(num) { //ios・safari用
+            window.location.href = './edit.html?num=' + num;
+
         },
         touchStartChar: function(event) { //android・chrome用
             var userAgent = window.navigator.userAgent.toLowerCase();
             if (userAgent.indexOf('chrome') != -1) {
-                this.clickChar(event)
-
+                if (event.target.text != undefined) {
+                    this.clickChar(event);
+                }
             } else if (userAgent.indexOf('safari') != -1) {}
         },
         touchEndChar: function(event) { //ios・safari用
             var userAgent = window.navigator.userAgent.toLowerCase();
             if (userAgent.indexOf('chrome') != -1) {} else if (userAgent.indexOf('safari') != -1) {
-                this.clickChar(event)
+                if (event.target.text != undefined) {
+                    this.clickChar(event);
+                }
             }
-
+        },
+        touchStartWord: function(event) { //android・chrome用
+            var userAgent = window.navigator.userAgent.toLowerCase();
+            if (userAgent.indexOf('chrome') != -1) {
+                if (event.target.text != undefined) {
+                    this.text = "";
+                    this.clickChar(event);
+                }
+            } else if (userAgent.indexOf('safari') != -1) {}
+        },
+        touchEndWord: function(event) { //ios・safari用
+            var userAgent = window.navigator.userAgent.toLowerCase();
+            if (userAgent.indexOf('chrome') != -1) {} else if (userAgent.indexOf('safari') != -1) {
+                if (event.target.text != undefined) {
+                    this.text = "";
+                    this.clickChar(event);
+                }
+            }
         },
         clickChar: function(event) {
             if (event.target.text == "　") {
@@ -106,19 +134,18 @@ var vm = new Vue({
                 this.beYouonSokuon();
                 return;
             }
-            if (this.text.length < 46) {
-                this.text += event.target.text
-                var text = event.target.text
-                if (text == "は") {
-                    text = "派"
-                }
-                if (text == "へ") {
-                    text = "屁"
-                }
-                setTimeout(() => {
-                    this.speak(text)
-                }, 10);
+
+            this.text += event.target.text
+            var text = event.target.text
+            if (text == "は") {
+                text = "派"
             }
+            if (text == "へ") {
+                text = "屁"
+            }
+            setTimeout(() => {
+                this.speak(text)
+            }, 10);
         },
         toggleVisualMode: function() {
             this.visualMode = {
@@ -159,11 +186,20 @@ var vm = new Vue({
         }
     },
     created: function() {
+        // サイズ調整
         this.marginBottom = this.height - document.getElementById('main').clientHeight
         if (this.width > this.height) {
             this.cssTransform = `scale(calc(${this.width} / ${this.targetWidth}), calc(${this.height} / ${this.targetHeight}))`
         } else {
             this.cssTransform = `rotate(90deg) translateY(-${this.width}px) scale(calc(${this.height} / ${this.targetWidth}), calc(${this.width} / ${this.targetHeight})) `
         }
+
+        // ローカルストレージの初期化
+        if (localStorage.getItem('wordList') == null) {
+            localStorage.setItem('wordList', JSON.stringify(
+                ["ありがとう", "さようなら", "ごめんなさい", "べんきょうしたいです", "おみずがのみたいです", "といれにいきたいです", "あそびたいです", "つかれました", "ごろんしたいです", "あしたてんきになぁれ"]
+            ));
+        }
+        this.wordList = JSON.parse(localStorage.getItem('wordList'))
     }
 });

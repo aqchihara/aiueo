@@ -43,6 +43,11 @@ tr:nth-child(2n+1) td.word:nth-child(2n+1) {
     background-color: lightyellow;
 }
 
+tr:nth-child(2n) td.word.edit:nth-child(2n),
+tr:nth-child(2n+1) td.word.edit:nth-child(2n+1) {
+    background-color: lightcyan;
+}
+
 tbody {
     display: flex;
     width: auto;
