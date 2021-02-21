@@ -8,6 +8,7 @@ var vm = new Vue({
         marginBottom: 0,
         visualMode: "icon",
         cssTransform: "",
+        num: 0,
         wordList: [],
         all: [
             'あいうえお',
@@ -161,6 +162,12 @@ var vm = new Vue({
         deleteChar: function(event) {
             this.text = this.text.slice(0, -1)
         },
+        registerWord: function(event) {
+            this.wordList[this.num] = this.text
+            localStorage.setItem('wordList', JSON.stringify(this.wordList));
+
+            window.location.href = './edit_list.html';
+        },
         beDakuon: function(event) {
             if (this.text.slice(-1) in this.dakuon_dic) {
                 this.text = this.text.slice(0, -1) + this.dakuon_dic[this.text.slice(-1)]
@@ -201,5 +208,15 @@ var vm = new Vue({
             ));
         }
         this.wordList = JSON.parse(localStorage.getItem('wordList'))
+
+
+        // 編集ページでの動き
+        var params = (new URL(document.location)).searchParams;
+        this.num = params.get('num');
+
+        if (this.num != undefined) {
+            this.wordList = JSON.parse(localStorage.getItem('wordList'))
+            this.text = this.wordList[this.num]
+        }
     }
 });
