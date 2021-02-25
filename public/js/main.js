@@ -5,6 +5,7 @@ var vm = new Vue({
         height: window.innerHeight,
         targetWidth: pageWidth,
         targetHeight: pageHight,
+        maxTextLength: maxTextLength,
         marginBottom: 0,
         visualMode: "icon",
         cssTransform: "",
@@ -79,11 +80,16 @@ var vm = new Vue({
             this.speak(this.text);
         },
         touchStartEdit: function(num) { //android・chrome用
-            window.location.href = './edit.html?num=' + num;
+            var userAgent = window.navigator.userAgent.toLowerCase();
+            if (userAgent.indexOf('chrome') != -1) {
+                window.location.href = './edit.html?num=' + num;
+            } else if (userAgent.indexOf('safari') != -1) {}
         },
         touchEndEdit: function(num) { //ios・safari用
-            window.location.href = './edit.html?num=' + num;
-
+            var userAgent = window.navigator.userAgent.toLowerCase();
+            if (userAgent.indexOf('chrome') != -1) {} else if (userAgent.indexOf('safari') != -1) {
+                window.location.href = './edit.html?num=' + num;
+            }
         },
         touchStartChar: function(event) { //android・chrome用
             var userAgent = window.navigator.userAgent.toLowerCase();
@@ -136,17 +142,19 @@ var vm = new Vue({
                 return;
             }
 
-            this.text += event.target.text
-            var text = event.target.text
-            if (text == "は") {
-                text = "派"
+            if (this.text.length != this.maxTextLength) { //文字数が許容できない場合はスキップ
+                this.text += event.target.text
+                var text = event.target.text
+                if (text == "は") {
+                    text = "派"
+                }
+                if (text == "へ") {
+                    text = "屁"
+                }
+                setTimeout(() => {
+                    this.speak(text)
+                }, 10);
             }
-            if (text == "へ") {
-                text = "屁"
-            }
-            setTimeout(() => {
-                this.speak(text)
-            }, 10);
         },
         toggleVisualMode: function() {
             this.visualMode = {
