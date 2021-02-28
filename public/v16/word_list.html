@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>あいうえお表v16</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v16/logo192.jpg" sizes="192x192" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="/js/pwa.js"></script>
+</head>
+
+<body oncontextmenu='return false;'>
+    <div id="main" v-bind:style="`transform:${cssTransform};margin-bottom:${marginBottom}px;`">
+        <h1 v-bind:style="`width: ${targetWidth}px;`">{{text}}</h1>
+        <table>
+            <tbody>
+                <tr v-for="retsu in [0,1] " :key="retsu.id">
+                    <td class="word" v-for="gyou in [0,1,2,3,4]" :key="gyou.id">
+                        <label v-bind:for="`image${retsu * 5 + gyou}`">
+                            <img v-bind:id="`img${retsu * 5 + gyou}`" v-bind:src="`${imageList[retsu * 5 + gyou]}`">
+                        </label>
+                        <a href="#" v-bind:class="`button ${visualMode} kana`" v-on:touchstart="touchStartWord" v-on:touchend="touchEndWord">{{wordList[retsu * 5 + gyou]}}<br /></a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <section class="page_tab">
+            <a href="./word_list.html" style="visibility: hidden;">単語一覧</a>
+            <a href="./edit_list.html" onclick="return confirm('単語を編集しますか？')">単語編集</a>
+            <a href="./" class="char-list">50音表</a>
+        </section>
+    </div>
+    <script>
+        let pageWidth = 809;
+        let pageHight = 466;
+        let maxTextLength = -1;
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

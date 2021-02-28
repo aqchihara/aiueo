@@ -48,6 +48,28 @@ tr:nth-child(2n+1) td.word.edit:nth-child(2n+1) {
     background-color: lightcyan;
 }
 
+td.word label {
+    float: left;
+    width: 80px;
+    height: 64px;
+}
+
+td.word img {
+    width: 80px;
+    height: 64px;
+    object-fit: contain;
+    white-space: pre;
+}
+
+td.word input {
+    display: none;
+}
+
+td.word a {
+    float: left;
+    width: 270px;
+}
+
 tbody {
     display: flex;
     width: auto;
@@ -88,10 +110,11 @@ a.button {
     background-repeat: no-repeat;
 }
 
-a.button:hover {
+
+/* a.button:hover {
     color: rgba(255, 255, 255, 0.85);
     box-shadow: rgba(30, 22, 54, 0.7) 0 0px 0px 40px inset;
-}
+} */
 
 a.button.text {
     background-image: inherit !important;
@@ -102,12 +125,19 @@ a.button.text {
 .word a.button {
     padding: 10px 20px 10px 20px;
     height: 1.8em;
-    font-size: 24px;
+    font-size: 22px;
     max-width: inherit;
 }
 
 section.page_tab a {
     padding: 10px 20px 10px 20px;
+    float: left;
+    border: 1px solid black;
+    margin: 5px;
+}
+
+section.page_tab a.char-list {
+    float: right;
 }
 
 #main {
