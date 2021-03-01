@@ -6,6 +6,7 @@ var urlsToCache = [
     "https://aiueo-learn.web.app/v17/edit.html",
     "https://aiueo-learn.web.app/css/main.css",
     "https://aiueo-learn.web.app/js/main.js",
+    "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js",
 ];
 
 self.addEventListener('install', function(event) {
