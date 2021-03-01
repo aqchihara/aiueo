@@ -1,9 +1,9 @@
-var CACHE_NAME = "Aiueo-cache-v17-1";
+var CACHE_NAME = "Aiueo-cache-v18-1";
 var urlsToCache = [
-    "https://aiueo-learn.web.app/v17/",
-    "https://aiueo-learn.web.app/v17/word_list.html",
-    "https://aiueo-learn.web.app/v17/edit_list.html",
-    "https://aiueo-learn.web.app/v17/edit.html",
+    "https://aiueo-learn.web.app/v18/",
+    "https://aiueo-learn.web.app/v18/word_list.html",
+    "https://aiueo-learn.web.app/v18/edit_list.html",
+    "https://aiueo-learn.web.app/v18/edit.html",
     "https://aiueo-learn.web.app/css/main.css",
     "https://aiueo-learn.web.app/js/main.js",
     "https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js",
