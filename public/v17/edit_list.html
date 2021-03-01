@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>あいうえお表v17</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <link rel="manifest" href="./manifest.json">
+    <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v17/logo192.jpg" sizes="192x192" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/main.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+    <script src="/js/pwa.js"></script>
+</head>
+
+<body oncontextmenu='return false;'>
+    <div id="main" v-bind:style="`transform:${cssTransform};margin-bottom:${marginBottom}px;`">
+        <h1 v-bind:style="`width: ${targetWidth}px;`">編集したい単語を選んでください</h1>
+        <table>
+            <tbody>
+                <tr v-for="retsu in [0,1] " :key="retsu.id">
+                    <td class="word edit" v-for="gyou in [0,1,2,3,4]" :key="gyou.id">
+                        <label v-bind:for="`image${retsu * 5 + gyou}`">
+                            <img v-bind:id="`img${retsu * 5 + gyou}`" v-bind:src="`${imageList[retsu * 5 + gyou]}`" alt="&#13;&#10画像編集">
+                        </label>
+                        <input v-bind:id="`image${retsu * 5 + gyou}`" type="file" v-bind:name="`image${retsu * 5 + gyou}`" accept="image/*" @change="onImageChange2" :num="retsu * 5 + gyou">
+                        <a href="#" v-bind:class="`button ${visualMode} kana`" v-on:touchstart="touchStartEdit(retsu * 5 + gyou)" v-on:touchend="touchEndEdit(retsu * 5 + gyou)">
+                            <span>{{wordList[retsu * 5 + gyou]}}</span>
+                            <br />
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <section class="page_tab">
+            <a href="./word_list.html">単語一覧</a>
+            <a href="./edit_list.html" onclick="return confirm('単語を編集しますか？')" style="visibility: hidden;">単語編集</a>
+            <a href="./" class="char-list">50音表</a>
+        </section>
+    </div>
+    <script>
+        let pageWidth = 809;
+        let pageHight = 466;
+        let maxTextLength = -1;
+    </script>
+    <script src="/js/main.js"></script>
+</body>
+
+</html>

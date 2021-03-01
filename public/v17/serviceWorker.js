@@ -1,9 +1,9 @@
-var CACHE_NAME = "Aiueo-cache-v16-1";
+var CACHE_NAME = "Aiueo-cache-v17-1";
 var urlsToCache = [
-    "https://aiueo-learn.web.app/v16/",
-    "https://aiueo-learn.web.app/v16/word_list.html",
-    "https://aiueo-learn.web.app/v16/edit_list.html",
-    "https://aiueo-learn.web.app/v16/edit.html",
+    "https://aiueo-learn.web.app/v17/",
+    "https://aiueo-learn.web.app/v17/word_list.html",
+    "https://aiueo-learn.web.app/v17/edit_list.html",
+    "https://aiueo-learn.web.app/v17/edit.html",
 ];
 
 self.addEventListener('install', function(event) {

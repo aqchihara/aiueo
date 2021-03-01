@@ -1,0 +1,14 @@
+{
+    "name": "あいうえおv17",
+    "short_name": "あいうえおv17",
+    "orientation": "landscape-primary",
+    "icons": [{
+        "src": "https://aiueo-learn.web.app/images/い.JPG",
+        "sizes": "192x192",
+        "type": "image/png"
+    }],
+    "start_url": "https://aiueo-learn.web.app/v17/",
+    "display": "fullscreen",
+    "background_color": "#cccccc",
+    "theme_color": "#2F3BA2"
+}

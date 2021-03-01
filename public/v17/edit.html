@@ -2,10 +2,10 @@
 <html>
 
 <head>
-    <title>あいうえお表v16</title>
+    <title>あいうえお表v17</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no">
     <link rel="manifest" href="./manifest.json">
-    <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/images/い.JPG" />
+    <link rel="apple-touch-icon" href="https://aiueo-learn.web.app/v17/logo192.jpg" sizes="192x192" />
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/css/style.css" />
@@ -32,10 +32,8 @@
                 </tr>
                 <tr>
                     <td><a href="#" class="button" v-on:touchstart="toggleVisualMode" style="background-image: url(/images/切替.JPG);">切替</a></td>
-                    <td><a href="./word_list.html" class="button" style="background-image: url(/images/単語.JPG);">単語<br /></a></td>
-                    <td>
-                        <a href="#" class="button"><br /></a>
-                    </td>
+                    <td><a href="./edit_list.html" class="button">戻る<br /></a></td>
+                    <td><a href="#" class="button" v-on:touchstart="registerWord" style="background-image: url(/images/登録.JPG);">登録<br /></a></td>
                     <td><a href="#" class="button" v-on:touchstart="deleteChar" style="background-image: url(/images/一消.JPG);">一消</a>
                     </td>
                     <td><a href="#" class="button" v-on:touchstart="playSound" style="background-image: url(/images/再生.JPG);">再生</a>
@@ -47,7 +45,7 @@
     <script>
         let pageWidth = 753;
         let pageHight = 451;
-        let maxTextLength = 46;
+        let maxTextLength = 11;
     </script>
     <script src="/js/main.js"></script>
 </body>
